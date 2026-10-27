@@ -42,7 +42,7 @@ footer{max-width:1050px;margin:auto;padding:10px 22px 35px;font-size:12px;color:
 </div>
 </section>
 <section class="panel"><h2>JARVIS KONSOLE</h2><div id="log" aria-live="polite"></div></section>
-<section class="panel"><h2>MIXED REALITY</h2><p style="line-height:1.5;font-size:14px">Starte das holografische HUD in der Quest. Die reale Umgebung bleibt sichtbar, wenn der Browser <b>immersive-ar</b> unterstützt.</p><button id="ar" style="width:100%">◈ MIXED REALITY STARTEN</button><p><small id="arHint">WebXR benötigt HTTPS und Quest-Browser-Unterstützung. XR verwendet den Viewer-Referenzraum.</small></p><button id="exit" style="width:100%">XR-Sitzung beenden</button></section>
+<section class="panel"><h2>MIXED REALITY</h2><p style="line-height:1.5;font-size:14px">Starte das holografische HUD in der Quest. Die reale Umgebung bleibt sichtbar, wenn der Browser <b>immersive-ar</b> unterstützt.</p><button id="ar" style="width:100%">◈ MIXED REALITY STARTEN</button><p><small id="arHint">WebXR benötigt HTTPS und Browserunterstützung.</small></p><button id="exit" style="width:100%">XR-Sitzung beenden</button></section>
 </main>
 <footer>Datenschutz: Keine Kameraübertragung, kein KI-Backend und keine Aufzeichnung. Mikrofon nur nach Klick und Browserfreigabe. Nicht beim Autofahren verwenden.</footer>
 <script type="module">
@@ -77,7 +77,7 @@ let THREE;
 async function init3D(){
 const m=await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js');THREE=m;
 renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
-renderer.setSize(window.innerWidth,window.innerHeight);renderer.xr.enabled=true;renderer.xr.setReferenceSpaceType('viewer');renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(window.innerWidth,window.innerHeight);renderer.xr.enabled=true;renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.domElement.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:1000';document.body.appendChild(renderer.domElement);
 scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,.01,100);
 world=new THREE.Group();scene.add(world);
@@ -87,63 +87,42 @@ const dot=new THREE.Mesh(new THREE.SphereGeometry(.045,20,12),new THREE.MeshBasi
 centerLabel=textSprite('J.A.R.V.I.S. ONLINE',.85);centerLabel.position.set(0,.42,0);world.add(centerLabel);
 modeLabel=textSprite('STANDARD',.65);modeLabel.position.set(0,-.43,0);world.add(modeLabel);
 clockLabel=textSprite('--:--:--',.48);clockLabel.position.set(.48,.3,0);world.add(clockLabel);
-
-// Interaktive 3D-Schaltflächen für die Meta Quest Controller
+// XR-Schaltflächen befinden sich vor dem Nutzer und sind mit dem Trigger anwählbar.
 raycaster=new THREE.Raycaster();
-const buttonDefs=[
- ['WERKSTATT',()=> $('workshop').click()],
- ['SYSTEMCHECK',()=> $('briefing').click()],
- ['UHRZEIT',()=>say('Es ist '+new Date().toLocaleTimeString('de-DE'))],
- ['BEENDEN',()=>session?.end()]
-];
-buttonDefs.forEach(([label,action],i)=>{
+const labels=[['WERKSTATT',()=>document.getElementById('workshop').click()],['SYSTEMCHECK',()=>document.getElementById('briefing').click()],['UHRZEIT',()=>say('Es ist '+new Date().toLocaleTimeString('de-DE'))],['BEENDEN',()=>session?.end()]];
+labels.forEach(([label,action],i)=>{
  const group=new THREE.Group();
- const bg=new THREE.Mesh(new THREE.PlaneGeometry(.43,.13),
-   new THREE.MeshBasicMaterial({color:0x07314d,side:THREE.DoubleSide,transparent:true,opacity:.9}));
+ const bg=new THREE.Mesh(new THREE.PlaneGeometry(.46,.12),new THREE.MeshBasicMaterial({color:0x075075,transparent:true,opacity:.88,side:THREE.DoubleSide}));
  group.add(bg);
- const txt=textSprite(label,.37);txt.position.z=.003;group.add(txt);
- group.position.set(i%2===0?-.25:.25,-.65-Math.floor(i/2)*.17,0);
- group.userData={action,bg};world.add(group);xrButtons.push(group);
+ const title=textSprite(label,.40);title.position.z=.004;group.add(title);
+ group.position.set(i%2===0?-.25:.25, -.62-Math.floor(i/2)*.17,0);
+ world.add(group);xrButtons.push({mesh:bg,action,group});
 });
 for(let i=0;i<2;i++){
- const controller=renderer.xr.getController(i);
- const lineGeo=new THREE.BufferGeometry().setFromPoints([
-  new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,-2)
- ]);
- controller.add(new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0x46e4ff})));
- scene.add(controller);controllers.push(controller);
+ const controller=renderer.xr.getController(i);scene.add(controller);controllers.push(controller);
+ const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,-2)]),new THREE.LineBasicMaterial({color:0x46e4ff}));
+ controller.add(line);
  controller.addEventListener('select',()=>{
-  raycaster.setFromXRController(controller);
-  const hits=raycaster.intersectObjects(xrButtons,true);
-  if(hits.length){
-   let o=hits[0].object;
-   while(o&&!o.userData.action)o=o.parent;
-   if(o)o.userData.action();
-  }
+  raycaster.setFromCamera(new THREE.Vector2(0,0),camera);
+  const origin=new THREE.Vector3(),direction=new THREE.Vector3(0,0,-1);
+  controller.getWorldPosition(origin);controller.getWorldQuaternion(_controllerQuat);
+  direction.applyQuaternion(_controllerQuat);raycaster.set(origin,direction);
+  const hit=raycaster.intersectObjects(xrButtons.map(b=>b.mesh),false)[0];
+  if(hit)xrButtons.find(b=>b.mesh===hit.object)?.action();
  });
 }
-renderer.setAnimationLoop((t,frame)=>{if(session){const xrCam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion(),forward=new THREE.Vector3(0,0,-1);xrCam.getWorldPosition(p);xrCam.getWorldQuaternion(q);world.position.copy(p).add(forward.applyQuaternion(q).multiplyScalar(1.35));world.quaternion.copy(q);setSprite(clockLabel,new Date().toLocaleTimeString('de-DE'));
-for(const b of xrButtons)b.userData.bg.material.color.setHex(0x07314d);
-for(const c of controllers){
- raycaster.setFromXRController(c);
- const hits=raycaster.intersectObjects(xrButtons,true);
- if(hits.length){
-  let o=hits[0].object;
-  while(o&&!o.userData.action)o=o.parent;
-  if(o)o.userData.bg.material.color.setHex(0x087ea4);
- }
-}
-renderer.render(scene,camera);}});
+const _controllerQuat=new THREE.Quaternion();
+renderer.setAnimationLoop((t,frame)=>{if(session){const xrCam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion(),forward=new THREE.Vector3(0,0,-1);xrCam.getWorldPosition(p);xrCam.getWorldQuaternion(q);world.position.copy(p).add(forward.applyQuaternion(q).multiplyScalar(1.35));world.quaternion.copy(q);world.rotation.z+=Math.sin(t*.0005)*.0002;setSprite(clockLabel,new Date().toLocaleTimeString('de-DE'));renderer.render(scene,xrCam);}});
 }
 $('ar').onclick=async()=>{
 if(!navigator.xr){log('WebXR fehlt. Nutze den Meta Quest Browser mit HTTPS.');return;}
 try{
 if(!await navigator.xr.isSessionSupported('immersive-ar')){log('Immersive AR ist hier nicht verfügbar. Der 2D-Modus funktioniert weiterhin.');return;}
 $('status').textContent='XR STARTET';if(!renderer)await init3D();
-session=await navigator.xr.requestSession('immersive-ar');
+session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:[],optionalFeatures:['local','dom-overlay'],domOverlay:{root:document.body}});
 session.addEventListener('end',()=>{session=null;$('xrState').textContent='BEREIT';$('status').textContent='SYSTEM BEREIT';log('XR-Sitzung beendet.');});
 await renderer.xr.setSession(session);$('xrState').textContent='AR AKTIV';$('status').textContent='MIXED REALITY';log('Mixed Reality gestartet.');
-}catch(e){log('XR-Start fehlgeschlagen: '+e.message);$('status').textContent='SYSTEM BEREIT';$('xrState').textContent='FEHLER';if(session){try{await session.end();}catch(_){}session=null;}}
+}catch(e){log('XR-Start fehlgeschlagen: '+e.message);$('status').textContent='SYSTEM BEREIT';}
 };
 $('exit').onclick=async()=>{if(session)await session.end();else log('Keine XR-Sitzung aktiv.');};
 (async()=>{try{$('xrState').textContent=navigator.xr&&await navigator.xr.isSessionSupported('immersive-ar')?'AR BEREIT':'2D MODUS';}catch{$('xrState').textContent='2D MODUS';}})();
