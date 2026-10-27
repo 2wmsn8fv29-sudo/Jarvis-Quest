@@ -1,129 +1,23 @@
-<!doctype html>
-<html lang="de">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>J.A.R.V.I.S. | Quest HUD</title>
-<style>
-:root{--cyan:#46e4ff;--blue:#0086d1;--bg:#030c17;--line:#1d83ad}
-*{box-sizing:border-box}body{margin:0;color:#d8f8ff;background:radial-gradient(ellipse at center,#092a40,#020710 75%);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid #14638b;letter-spacing:3px;color:var(--cyan);font-weight:bold}small{font-size:11px;color:#88b8c9;letter-spacing:1px}
-main{max-width:1050px;margin:auto;padding:22px;display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
-.panel{border:1px solid #1b7299;background:#051727bb;border-radius:12px;padding:20px;box-shadow:inset 0 0 24px #008bba12}
-.hero{text-align:center;min-height:350px;display:flex;flex-direction:column;justify-content:center;align-items:center}
-.reactor{position:relative;width:230px;height:230px;border-radius:50%;border:2px dashed #26bbef;display:grid;place-items:center;box-shadow:0 0 32px #0099d055,inset 0 0 40px #0099d044;animation:spin 28s linear infinite}
-.reactor:before,.reactor:after{content:"";position:absolute;border-radius:50%;border:5px dotted #69dfff;inset:24px;opacity:.8}.reactor:after{inset:52px;border:3px solid #00a6ed;border-left-color:transparent;border-right-color:transparent}
-.core{width:58px;height:58px;background:#8df4ff;border-radius:50%;box-shadow:0 0 30px #2ce5ff,0 0 70px #00a9ff}
-@keyframes spin{to{transform:rotate(360deg)}}
-h1{font-size:23px;letter-spacing:6px;color:#78eaff}h2{font-size:13px;letter-spacing:3px;color:#55dbff;margin:0 0 16px}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{border:1px solid #135b79;padding:13px;border-radius:8px}.metric strong{display:block;font-size:24px;margin-top:6px;color:white}
-button{cursor:pointer;border:1px solid #36bde7;border-radius:8px;background:#07314d;color:#d6f8ff;padding:13px;font-size:14px;text-align:left}
-button:hover,button:focus-visible{background:#0a5275;outline:2px solid #6ce7ff}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
-#log{height:135px;overflow:auto;white-space:pre-wrap;font-size:13px;line-height:1.6;color:#c1e7f5}
-#ar{background:#075d79;text-align:center;font-weight:bold}#status{color:#86f3cc}
-footer{max-width:1050px;margin:auto;padding:10px 22px 35px;font-size:12px;color:#9dbdc9}
-@media(max-width:720px){main{grid-template-columns:1fr}.reactor{width:185px;height:185px}.hero{min-height:275px}header{font-size:13px}}
-</style>
-</head>
-<body>
-<header><span>◉ J.A.R.V.I.S. <small>QUEST / MK-I</small></span><span id="status">SYSTEM BEREIT</span></header>
-<main>
-<section class="panel hero"><div class="reactor"><div class="core"></div></div><h1>J.A.R.V.I.S.</h1><small>PERSONAL ASSISTANT · VERSION 1.0</small></section>
-<section class="panel">
-<h2>TELEMETRIE</h2><div class="metrics">
-<div class="metric"><small>LOKALZEIT</small><strong id="clock">--:--:--</strong></div>
-<div class="metric"><small>BETRIEBSMODUS</small><strong id="mode" style="font-size:17px">STANDARD</strong></div>
-<div class="metric"><small>XR STATUS</small><strong id="xrState" style="font-size:17px">PRÜFUNG</strong></div>
-<div class="metric"><small>SPRACHE</small><strong id="voiceState" style="font-size:17px">OPTIONAL</strong></div>
-</div>
-<div class="actions">
-<button id="workshop">⚙ Werkstattmodus</button><button id="briefing">◉ Systemcheck</button>
-<button id="voice">🎙 Sprachbefehl</button><button id="help">? Befehle</button>
-</div>
-</section>
-<section class="panel"><h2>JARVIS KONSOLE</h2><div id="log" aria-live="polite"></div></section>
-<section class="panel"><h2>MIXED REALITY</h2><p style="line-height:1.5;font-size:14px">Starte das holografische HUD in der Quest. Die reale Umgebung bleibt sichtbar, wenn der Browser <b>immersive-ar</b> unterstützt.</p><button id="ar" style="width:100%">◈ MIXED REALITY STARTEN</button><p><small id="arHint">WebXR benötigt HTTPS und Browserunterstützung.</small></p><button id="exit" style="width:100%">XR-Sitzung beenden</button></section>
-</main>
-<footer>Datenschutz: Keine Kameraübertragung, kein KI-Backend und keine Aufzeichnung. Mikrofon nur nach Klick und Browserfreigabe. Nicht beim Autofahren verwenden.</footer>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>J.A.R.V.I.S. MK-II</title><style>
+:root{--c:#52e6ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#103449,#030914 75%);color:#d8f8ff;font:16px Arial,sans-serif}header{padding:20px;border-bottom:1px solid #2689aa;letter-spacing:3px;color:var(--c)}main{max-width:960px;margin:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}.panel{border:1px solid #2689aa;background:#061b2de8;border-radius:14px;padding:18px;box-shadow:0 0 20px #00bfff19}h2{font-size:15px;letter-spacing:2px;color:var(--c)}button,input,select{font:inherit;border-radius:8px;padding:12px;background:#092f46;color:white;border:1px solid #2bbddd}button{cursor:pointer}button:active{background:#15779c}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px}.full{width:100%;margin-top:8px}input{width:100%;margin:5px 0 10px}label{font-size:13px;color:#b3dbe6}output{display:block;font-size:22px;color:#8cfaff;margin:12px 0}#log{height:110px;overflow:auto;font-size:13px;white-space:pre-wrap}small{color:#9dbcca}#xrStart{background:#087a9b;font-weight:bold}#timerDisplay{font-size:35px;color:var(--c);text-align:center}footer{padding:20px;text-align:center;font-size:12px;color:#8bb5c5}</style></head><body><header>◉ J.A.R.V.I.S. <small>QUEST / MK-II</small></header><main>
+<section class="panel"><h2>◈ MIXED REALITY</h2><p>Holografisches HUD mit Controller-Auswahl. Startabstand 65 cm.</p><button id="xrStart" class="full">MIXED REALITY STARTEN</button><button id="xrExit" class="full">XR BEENDEN</button><label>HUD-Abstand: <span id="distanceText">65</span> cm</label><input id="distance" type="range" min="45" max="160" value="65"><button id="recenter" class="full">HUD NEU AUSRICHTEN</button><small id="xrStatus">XR noch nicht gestartet</small></section>
+<section class="panel"><h2>⚙ SYSTEMSTEUERUNG</h2><div class="buttons"><button id="mode">WERKSTATT AN</button><button id="system">SYSTEMCHECK</button><button id="speak">SPRACHBEFEHL</button><button id="clock">UHRZEIT</button></div><output id="modeText">STANDARDMODUS</output></section>
+<section class="panel"><h2>◷ ZEITWERKZEUGE</h2><div id="timerDisplay">00:00.0</div><div class="buttons"><button id="stopStart">START / PAUSE</button><button id="stopReset">RESET</button></div><label>Countdown in Sekunden</label><input id="countSeconds" type="number" min="1" max="86400" value="60"><div class="buttons"><button id="countStart">COUNTDOWN START</button><button id="countStop">STOPP</button></div></section>
+<section class="panel"><h2>⚒ WERKSTATTRECHNER</h2><label>Wert</label><input id="convValue" type="number" value="100" step="any"><label>Umrechnung</label><select id="convType" class="full"><option value="nmft">Nm → lb-ft</option><option value="ftnm">lb-ft → Nm</option><option value="kwps">kW → PS</option><option value="pskw">PS → kW</option><option value="barkpa">bar → kPa</option><option value="kpabar">kPa → bar</option><option value="mmcm">mm → cm</option></select><button id="convert" class="full">BERECHNEN</button><output id="convResult">Ergebnis bereit</output></section>
+<section class="panel"><h2>▣ TASCHENRECHNER</h2><input id="calc" placeholder="z. B. (12+8)*2" inputmode="text"><button id="calculate" class="full">AUSRECHNEN</button><output id="calcResult">Bereit</output></section><section class="panel"><h2>◉ JARVIS KONSOLE</h2><div id="log"></div><small>Lokale Demo, keine Verbindung zu Fahrzeugsteuergeräten oder KI-Backend.</small></section></main><footer>J.A.R.V.I.S. MK-II · Quest Browser · Nicht während der Fahrt verwenden</footer>
 <script type="module">
-const $=id=>document.getElementById(id);
-const log=(msg)=>{const d=document.createElement('div');d.textContent='> '+msg;$('log').prepend(d);};
-const say=(msg)=>{log(msg);if('speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(msg);u.lang='de-DE';u.rate=1.04;speechSynthesis.speak(u);}};
-let workshop=false;
-$('workshop').onclick=()=>{workshop=!workshop;$('mode').textContent=workshop?'WERKSTATT':'STANDARD';say(workshop?'Werkstattmodus aktiviert. Bitte Fehlercode oder Fahrzeug nennen.':'Standardmodus aktiviert.');update3D();};
-$('briefing').onclick=()=>say('Alle lokalen Systeme bereit. Uhrzeit '+new Date().toLocaleTimeString('de-DE')+'.');
-$('help').onclick=()=>log('Befehle: Jarvis, Systemcheck, Werkstattmodus, Standardmodus, Uhrzeit. Spracherkennung hängt vom Browser ab.');
-setInterval(()=>$('clock').textContent=new Date().toLocaleTimeString('de-DE'),500);$('clock').textContent=new Date().toLocaleTimeString('de-DE');
-log('J.A.R.V.I.S. MK-I online. Dies ist eine lokale Demo ohne echte KI.');
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-$('voiceState').textContent=SR?'BEREIT':'NICHT VERFÜGBAR';
-$('voice').onclick=()=>{if(!SR){log('Dieser Browser unterstützt die Web-Spracherkennung nicht. Verwende die Schaltflächen.');return;}
-const r=new SR();r.lang='de-DE';r.interimResults=false;r.maxAlternatives=1;
-r.onresult=e=>{let s=e.results[0][0].transcript.toLowerCase();log('Erkannt: '+s);
-if(s.includes('werkstatt'))$('workshop').click();
-else if(s.includes('standard')){if(workshop)$('workshop').click();else say('Standardmodus ist bereits aktiv.');}
-else if(s.includes('uhr'))say('Es ist '+new Date().toLocaleTimeString('de-DE'));
-else if(s.includes('system')||s.includes('status'))$('briefing').click();
-else say('Befehl nicht erkannt. Ich bin noch eine lokale Demo.');};
-r.onerror=e=>log('Mikrofon: '+e.error);
-try{r.start();log('Höre zu...');}catch(e){log('Spracherkennung konnte nicht gestartet werden.');}};
-let renderer,scene,camera,session,world,ring,centerLabel,modeLabel,clockLabel;
-let xrButtons=[],controllers=[],raycaster;
-function update3D(){if(modeLabel)setSprite(modeLabel,workshop?'WERKSTATT':'STANDARD');}
-function makeTextCanvas(text,scale=1){const c=document.createElement('canvas');c.width=1024;c.height=160;const x=c.getContext('2d');x.clearRect(0,0,1024,160);x.font='bold 64px Arial';x.textAlign='center';x.fillStyle='#69eaff';x.shadowColor='#00bfff';x.shadowBlur=22;x.fillText(text,512,100);return c;}
-function textSprite(text,width=.9){const canvas=makeTextCanvas(text);const tex=new THREE.CanvasTexture(canvas);const mat=new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false});const sprite=new THREE.Sprite(mat);sprite.scale.set(width,width*160/1024,1);sprite.userData={canvas,tex,text};return sprite;}
-function setSprite(sprite,text){if(!sprite||sprite.userData.text===text)return;const c=sprite.userData.canvas,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.font='bold 64px Arial';x.textAlign='center';x.fillStyle='#69eaff';x.shadowColor='#00bfff';x.shadowBlur=22;x.fillText(text,512,100);sprite.userData.tex.needsUpdate=true;sprite.userData.text=text;}
-let THREE;
-async function init3D(){
-const m=await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js');THREE=m;
-renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
-renderer.setSize(window.innerWidth,window.innerHeight);renderer.xr.enabled=true;renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.domElement.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:1000';document.body.appendChild(renderer.domElement);
-scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,.01,100);
-world=new THREE.Group();scene.add(world);
-const mat=new THREE.MeshBasicMaterial({color:0x38dfff,transparent:true,opacity:.8,side:THREE.DoubleSide});
-for(let r of [.16,.22,.28]){const geo=new THREE.TorusGeometry(r,.0025,4,80);const mesh=new THREE.Mesh(geo,mat);world.add(mesh);}
-const dot=new THREE.Mesh(new THREE.SphereGeometry(.045,20,12),new THREE.MeshBasicMaterial({color:0x9efaff}));world.add(dot);
-centerLabel=textSprite('J.A.R.V.I.S. ONLINE',.85);centerLabel.position.set(0,.42,0);world.add(centerLabel);
-modeLabel=textSprite('STANDARD',.65);modeLabel.position.set(0,-.43,0);world.add(modeLabel);
-clockLabel=textSprite('--:--:--',.48);clockLabel.position.set(.48,.3,0);world.add(clockLabel);
-// XR-Schaltflächen befinden sich vor dem Nutzer und sind mit dem Trigger anwählbar.
-raycaster=new THREE.Raycaster();
-const labels=[['WERKSTATT',()=>document.getElementById('workshop').click()],['SYSTEMCHECK',()=>document.getElementById('briefing').click()],['UHRZEIT',()=>say('Es ist '+new Date().toLocaleTimeString('de-DE'))],['BEENDEN',()=>session?.end()]];
-labels.forEach(([label,action],i)=>{
- const group=new THREE.Group();
- const bg=new THREE.Mesh(new THREE.PlaneGeometry(.46,.12),new THREE.MeshBasicMaterial({color:0x075075,transparent:true,opacity:.88,side:THREE.DoubleSide}));
- group.add(bg);
- const title=textSprite(label,.40);title.position.z=.004;group.add(title);
- group.position.set(i%2===0?-.25:.25, -.62-Math.floor(i/2)*.17,0);
- world.add(group);xrButtons.push({mesh:bg,action,group});
-});
-for(let i=0;i<2;i++){
- const controller=renderer.xr.getController(i);scene.add(controller);controllers.push(controller);
- const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,-2)]),new THREE.LineBasicMaterial({color:0x46e4ff}));
- controller.add(line);
- controller.addEventListener('select',()=>{
-  const origin=new THREE.Vector3(),direction=new THREE.Vector3(0,0,-1);
-  controller.getWorldPosition(origin);controller.getWorldQuaternion(_controllerQuat);
-  direction.applyQuaternion(_controllerQuat);raycaster.set(origin,direction);
-  const hit=raycaster.intersectObjects(xrButtons.map(b=>b.mesh),false)[0];
-  if(hit)xrButtons.find(b=>b.mesh===hit.object)?.action();
- });
-}
-const _controllerQuat=new THREE.Quaternion();
-renderer.setAnimationLoop((t,frame)=>{if(session){const xrCam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion(),forward=new THREE.Vector3(0,0,-1);xrCam.getWorldPosition(p);xrCam.getWorldQuaternion(q);world.position.copy(p).add(forward.applyQuaternion(q).multiplyScalar(1.35));world.quaternion.copy(q);world.rotation.z+=Math.sin(t*.0005)*.0002;setSprite(clockLabel,new Date().toLocaleTimeString('de-DE'));renderer.render(scene,camera);}});
-}
-$('ar').onclick=async()=>{
-if(!navigator.xr){log('WebXR fehlt. Nutze den Meta Quest Browser mit HTTPS.');return;}
-try{
-if(!await navigator.xr.isSessionSupported('immersive-ar')){log('Immersive AR ist hier nicht verfügbar. Der 2D-Modus funktioniert weiterhin.');return;}
-$('status').textContent='XR STARTET';if(!renderer)await init3D();renderer.xr.setReferenceSpaceType('viewer');
-session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:[],optionalFeatures:['dom-overlay'],domOverlay:{root:document.body}});
-session.addEventListener('end',()=>{session=null;$('xrState').textContent='BEREIT';$('status').textContent='SYSTEM BEREIT';log('XR-Sitzung beendet.');});
-await renderer.xr.setSession(session);$('xrState').textContent='AR AKTIV';$('status').textContent='MIXED REALITY';log('Mixed Reality gestartet.');
-}catch(e){log('XR-Start fehlgeschlagen: '+e.message);$('status').textContent='SYSTEM BEREIT';if(session){try{await session.end();}catch{}session=null;}}
-};
-$('exit').onclick=async()=>{if(session)await session.end();else log('Keine XR-Sitzung aktiv.');};
-(async()=>{try{$('xrState').textContent=navigator.xr&&await navigator.xr.isSessionSupported('immersive-ar')?'AR BEREIT':'2D MODUS';}catch{$('xrState').textContent='2D MODUS';}})();
-</script>
-</body></html>
+const $=id=>document.getElementById(id);const log=s=>{const e=document.createElement('div');e.textContent='> '+s;$('log').prepend(e)};const say=s=>{log(s);if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(s);u.lang='de-DE';speechSynthesis.speak(u)}};
+let workshop=false,session=null,renderer=null,scene=null,world=null,THREE=null,buttons=[],raycaster=null,controllers=[],distance=.65,anchor=null,stopElapsed=0,stopAt=0,stopRunning=false,countEnd=0,countRunning=false,clockSprite=null,modeSprite=null,infoSprite=null;
+$('mode').onclick=()=>{workshop=!workshop;$('modeText').textContent=workshop?'WERKSTATTMODUS':'STANDARDMODUS';$('mode').textContent=workshop?'WERKSTATT AUS':'WERKSTATT AN';say(workshop?'Werkstattmodus aktiviert':'Standardmodus aktiviert');refreshHUD()};$('system').onclick=()=>say('JARVIS online. XR '+(session?'aktiv':'inaktiv')+'. Modus '+(workshop?'Werkstatt':'Standard')+'.');$('clock').onclick=()=>say('Es ist '+new Date().toLocaleTimeString('de-DE'));
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;$('speak').onclick=()=>{if(!SR){log('Spracherkennung in diesem Browser nicht verfügbar');return}const r=new SR();r.lang='de-DE';r.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase();log('Erkannt: '+t);if(t.includes('werkstatt'))$('mode').click();else if(t.includes('system'))$('system').click();else if(t.includes('uhr'))$('clock').click();else say('Befehl nicht erkannt')};r.onerror=e=>log('Mikrofon: '+e.error);r.start()};
+$('distance').oninput=()=>{distance=Number($('distance').value)/100;$('distanceText').textContent=$('distance').value;if(session)positionHUD()};$('recenter').onclick=()=>{if(session){positionHUD();say('HUD neu ausgerichtet')}else log('Bitte zuerst Mixed Reality starten')};
+$('convert').onclick=()=>{const v=Number($('convValue').value),type=$('convType').value;const factors={nmft:[.737562,'lb-ft'],ftnm:[1.355818,'Nm'],kwps:[1.359622,'PS'],pskw:[.735499,'kW'],barkpa:[100,'kPa'],kpabar:[.01,'bar'],mmcm:[.1,'cm']};$('convResult').textContent=Number.isFinite(v)?(v*factors[type][0]).toLocaleString('de-DE',{maximumFractionDigits:3})+' '+factors[type][1]:'Ungültiger Wert';refreshHUD()};
+$('calculate').onclick=()=>{const s=$('calc').value.replace(/,/g,'.');if(!/^[0-9+*/().\s-]{1,100}$/.test(s)){ $('calcResult').textContent='Ungültiger Ausdruck';return}try{const tokens=s.match(/\d+(?:\.\d+)?|[()+*/-]/g)||[];let i=0;const factor=()=>{let t=tokens[i++];if(t==='-')return -factor();if(t==='+')return factor();if(t==='('){let v=expr();if(tokens[i++]!==')')throw Error();return v}if(!t||!/^\d/.test(t))throw Error();return Number(t)};const term=()=>{let v=factor();while(tokens[i]==='*'||tokens[i]==='/'){let op=tokens[i++],b=factor();v=op==='*'?v*b:v/b}return v};const expr=()=>{let v=term();while(tokens[i]==='+'||tokens[i]==='-'){let op=tokens[i++],b=term();v=op==='+'?v+b:v-b}return v};const result=expr();if(i!==tokens.length||!Number.isFinite(result))throw Error();$('calcResult').textContent=result.toLocaleString('de-DE',{maximumFractionDigits:8})}catch{$('calcResult').textContent='Rechenfehler'}};
+$('stopStart').onclick=()=>{if(stopRunning){stopElapsed+=performance.now()-stopAt;stopRunning=false}else{stopAt=performance.now();stopRunning=true}};$('stopReset').onclick=()=>{stopRunning=false;stopElapsed=0};$('countStart').onclick=()=>{const sec=Number($('countSeconds').value);if(sec>0&&sec<=86400){countEnd=performance.now()+sec*1000;countRunning=true;log('Countdown gestartet')}};$('countStop').onclick=()=>{countRunning=false;log('Countdown gestoppt')};setInterval(()=>{const ms=stopElapsed+(stopRunning?performance.now()-stopAt:0);const show=countRunning?Math.max(0,countEnd-performance.now()):ms;if(countRunning&&show===0){countRunning=false;say('Countdown beendet')}const sec=Math.floor(show/1000);$('timerDisplay').textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')+'.'+Math.floor(show%1000/100)},100);
+function canvasText(t,w=512,h=100){const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.clearRect(0,0,w,h);x.font='bold 39px Arial';x.textAlign='center';x.textBaseline='middle';x.fillStyle='#7feeff';x.shadowColor='#00aaff';x.shadowBlur=14;x.fillText(t,w/2,h/2,w-20);return c}function sprite(t,w=.35){const tex=new THREE.CanvasTexture(canvasText(t));const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));s.scale.set(w,w*100/512,1);s.userData={tex,text:t};return s}function setText(s,t){if(!s||s.userData.text===t)return;const x=s.userData.tex.image.getContext('2d'),c=x.canvas;x.clearRect(0,0,c.width,c.height);x.font='bold 39px Arial';x.textAlign='center';x.textBaseline='middle';x.fillStyle='#7feeff';x.shadowColor='#00aaff';x.shadowBlur=14;x.fillText(t,c.width/2,c.height/2,c.width-20);s.userData.tex.needsUpdate=true;s.userData.text=t}function refreshHUD(){setText(modeSprite,workshop?'WERKSTATT':'STANDARD');setText(infoSprite,$('convResult').textContent.slice(0,28))}
+function hudButton(text,x,y,fn){const g=new THREE.Group();g.position.set(x,y,0);const bg=new THREE.Mesh(new THREE.PlaneGeometry(.29,.085),new THREE.MeshBasicMaterial({color:0x06435e,transparent:true,opacity:.72,side:THREE.DoubleSide}));g.add(bg);const edges=new THREE.LineSegments(new THREE.EdgesGeometry(bg.geometry),new THREE.LineBasicMaterial({color:0x59eaff}));g.add(edges);const s=sprite(text,.27);s.position.z=.004;g.add(s);world.add(g);buttons.push({mesh:bg,fn});return g}
+async function initXR(){THREE=await import('https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js');renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});renderer.xr.enabled=true;renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);renderer.domElement.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:999';document.body.appendChild(renderer.domElement);scene=new THREE.Scene();world=new THREE.Group();scene.add(world);const ringmat=new THREE.MeshBasicMaterial({color:0x48eaff,transparent:true,opacity:.72});for(const r of [.075,.105,.135]){const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.0018,5,80),ringmat);world.add(ring)}const center=new THREE.Mesh(new THREE.SphereGeometry(.014,12,12),new THREE.MeshBasicMaterial({color:0x91faff}));world.add(center);const title=sprite('J.A.R.V.I.S. MK-II',.4);title.position.set(0,.205,0);world.add(title);clockSprite=sprite('--:--:--',.24);clockSprite.position.set(.28,.145,0);world.add(clockSprite);modeSprite=sprite('STANDARD',.28);modeSprite.position.set(0,-.20,0);world.add(modeSprite);infoSprite=sprite('SYSTEM BEREIT',.3);infoSprite.position.set(0,-.27,0);world.add(infoSprite);
+hudButton('WERKSTATT',-.32,.08,()=>$('mode').click());hudButton('SYSTEMCHECK',.32,.08,()=>$('system').click());hudButton('STOPPUHR',-.32,-.06,()=>$('stopStart').click());hudButton('RESET',.32,-.06,()=>$('stopReset').click());hudButton('NAEHER',-.32,-.38,()=>{$('distance').value=Math.max(45,Number($('distance').value)-10);$('distance').oninput()});hudButton('WEITER',.32,-.38,()=>{$('distance').value=Math.min(160,Number($('distance').value)+10);$('distance').oninput()});raycaster=new THREE.Raycaster();for(let n=0;n<2;n++){const c=renderer.xr.getController(n);c.addEventListener('selectstart',()=>{const origin=new THREE.Vector3(),dir=new THREE.Vector3(0,0,-1);c.getWorldPosition(origin);dir.applyQuaternion(c.getWorldQuaternion(new THREE.Quaternion()));raycaster.set(origin,dir);const hit=raycaster.intersectObjects(buttons.map(b=>b.mesh),false)[0];if(hit){const b=buttons.find(b=>b.mesh===hit.object);if(b)b.fn()}});scene.add(c);controllers.push(c)}renderer.setAnimationLoop(()=>{if(session){setText(clockSprite,new Date().toLocaleTimeString('de-DE'));renderer.render(scene,renderer.xr.getCamera())}})}
+function positionHUD(){if(!renderer||!session)return;const cam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion();cam.getWorldPosition(p);cam.getWorldQuaternion(q);world.position.copy(p).add(new THREE.Vector3(0,0,-distance).applyQuaternion(q));world.quaternion.copy(q)}
+$('xrStart').onclick=async()=>{if(session){log('XR ist bereits aktiv');return}if(!navigator.xr){log('WebXR nicht verfügbar');return}try{if(!await navigator.xr.isSessionSupported('immersive-ar')){log('Mixed Reality wird nicht unterstützt');return}if(!renderer)await initXR();session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:[],optionalFeatures:['local','dom-overlay'],domOverlay:{root:document.body}});session.addEventListener('end',()=>{session=null;$('xrStatus').textContent='XR beendet';log('XR beendet')});await renderer.xr.setSession(session);$('xrStatus').textContent='MIXED REALITY AKTIV';log('Mixed Reality gestartet');positionHUD()}catch(e){log('XR-Start fehlgeschlagen: '+e.message);$('xrStatus').textContent='XR FEHLER';if(session){try{await session.end()}catch{}session=null}}};$('xrExit').onclick=async()=>{if(session)await session.end()};log('J.A.R.V.I.S. MK-II online. Controller-Buttons und Werkzeuge bereit.');
+</script></body></html>
