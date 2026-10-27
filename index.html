@@ -103,7 +103,6 @@ for(let i=0;i<2;i++){
  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,-2)]),new THREE.LineBasicMaterial({color:0x46e4ff}));
  controller.add(line);
  controller.addEventListener('select',()=>{
-  raycaster.setFromCamera(new THREE.Vector2(0,0),camera);
   const origin=new THREE.Vector3(),direction=new THREE.Vector3(0,0,-1);
   controller.getWorldPosition(origin);controller.getWorldQuaternion(_controllerQuat);
   direction.applyQuaternion(_controllerQuat);raycaster.set(origin,direction);
@@ -112,17 +111,17 @@ for(let i=0;i<2;i++){
  });
 }
 const _controllerQuat=new THREE.Quaternion();
-renderer.setAnimationLoop((t,frame)=>{if(session){const xrCam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion(),forward=new THREE.Vector3(0,0,-1);xrCam.getWorldPosition(p);xrCam.getWorldQuaternion(q);world.position.copy(p).add(forward.applyQuaternion(q).multiplyScalar(1.35));world.quaternion.copy(q);world.rotation.z+=Math.sin(t*.0005)*.0002;setSprite(clockLabel,new Date().toLocaleTimeString('de-DE'));renderer.render(scene,xrCam);}});
+renderer.setAnimationLoop((t,frame)=>{if(session){const xrCam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion(),forward=new THREE.Vector3(0,0,-1);xrCam.getWorldPosition(p);xrCam.getWorldQuaternion(q);world.position.copy(p).add(forward.applyQuaternion(q).multiplyScalar(1.35));world.quaternion.copy(q);world.rotation.z+=Math.sin(t*.0005)*.0002;setSprite(clockLabel,new Date().toLocaleTimeString('de-DE'));renderer.render(scene,camera);}});
 }
 $('ar').onclick=async()=>{
 if(!navigator.xr){log('WebXR fehlt. Nutze den Meta Quest Browser mit HTTPS.');return;}
 try{
 if(!await navigator.xr.isSessionSupported('immersive-ar')){log('Immersive AR ist hier nicht verfügbar. Der 2D-Modus funktioniert weiterhin.');return;}
-$('status').textContent='XR STARTET';if(!renderer)await init3D();
-session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:[],optionalFeatures:['local','dom-overlay'],domOverlay:{root:document.body}});
+$('status').textContent='XR STARTET';if(!renderer)await init3D();renderer.xr.setReferenceSpaceType('viewer');
+session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:[],optionalFeatures:['dom-overlay'],domOverlay:{root:document.body}});
 session.addEventListener('end',()=>{session=null;$('xrState').textContent='BEREIT';$('status').textContent='SYSTEM BEREIT';log('XR-Sitzung beendet.');});
 await renderer.xr.setSession(session);$('xrState').textContent='AR AKTIV';$('status').textContent='MIXED REALITY';log('Mixed Reality gestartet.');
-}catch(e){log('XR-Start fehlgeschlagen: '+e.message);$('status').textContent='SYSTEM BEREIT';}
+}catch(e){log('XR-Start fehlgeschlagen: '+e.message);$('status').textContent='SYSTEM BEREIT';if(session){try{await session.end();}catch{}session=null;}}
 };
 $('exit').onclick=async()=>{if(session)await session.end();else log('Keine XR-Sitzung aktiv.');};
 (async()=>{try{$('xrState').textContent=navigator.xr&&await navigator.xr.isSessionSupported('immersive-ar')?'AR BEREIT':'2D MODUS';}catch{$('xrState').textContent='2D MODUS';}})();
