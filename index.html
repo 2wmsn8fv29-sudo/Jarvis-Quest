@@ -68,6 +68,7 @@ else say('Befehl nicht erkannt. Ich bin noch eine lokale Demo.');};
 r.onerror=e=>log('Mikrofon: '+e.error);
 try{r.start();log('Höre zu...');}catch(e){log('Spracherkennung konnte nicht gestartet werden.');}};
 let renderer,scene,camera,session,world,ring,centerLabel,modeLabel,clockLabel;
+let xrButtons=[],controllers=[],raycaster;
 function update3D(){if(modeLabel)setSprite(modeLabel,workshop?'WERKSTATT':'STANDARD');}
 function makeTextCanvas(text,scale=1){const c=document.createElement('canvas');c.width=1024;c.height=160;const x=c.getContext('2d');x.clearRect(0,0,1024,160);x.font='bold 64px Arial';x.textAlign='center';x.fillStyle='#69eaff';x.shadowColor='#00bfff';x.shadowBlur=22;x.fillText(text,512,100);return c;}
 function textSprite(text,width=.9){const canvas=makeTextCanvas(text);const tex=new THREE.CanvasTexture(canvas);const mat=new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false});const sprite=new THREE.Sprite(mat);sprite.scale.set(width,width*160/1024,1);sprite.userData={canvas,tex,text};return sprite;}
@@ -86,7 +87,53 @@ const dot=new THREE.Mesh(new THREE.SphereGeometry(.045,20,12),new THREE.MeshBasi
 centerLabel=textSprite('J.A.R.V.I.S. ONLINE',.85);centerLabel.position.set(0,.42,0);world.add(centerLabel);
 modeLabel=textSprite('STANDARD',.65);modeLabel.position.set(0,-.43,0);world.add(modeLabel);
 clockLabel=textSprite('--:--:--',.48);clockLabel.position.set(.48,.3,0);world.add(clockLabel);
-renderer.setAnimationLoop((t,frame)=>{if(session){const xrCam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion(),forward=new THREE.Vector3(0,0,-1);xrCam.getWorldPosition(p);xrCam.getWorldQuaternion(q);world.position.copy(p).add(forward.applyQuaternion(q).multiplyScalar(1.35));world.quaternion.copy(q);setSprite(clockLabel,new Date().toLocaleTimeString('de-DE'));renderer.render(scene,camera);}});
+
+// Interaktive 3D-Schaltflächen für die Meta Quest Controller
+raycaster=new THREE.Raycaster();
+const buttonDefs=[
+ ['WERKSTATT',()=> $('workshop').click()],
+ ['SYSTEMCHECK',()=> $('briefing').click()],
+ ['UHRZEIT',()=>say('Es ist '+new Date().toLocaleTimeString('de-DE'))],
+ ['BEENDEN',()=>session?.end()]
+];
+buttonDefs.forEach(([label,action],i)=>{
+ const group=new THREE.Group();
+ const bg=new THREE.Mesh(new THREE.PlaneGeometry(.43,.13),
+   new THREE.MeshBasicMaterial({color:0x07314d,side:THREE.DoubleSide,transparent:true,opacity:.9}));
+ group.add(bg);
+ const txt=textSprite(label,.37);txt.position.z=.003;group.add(txt);
+ group.position.set(i%2===0?-.25:.25,-.65-Math.floor(i/2)*.17,0);
+ group.userData={action,bg};world.add(group);xrButtons.push(group);
+});
+for(let i=0;i<2;i++){
+ const controller=renderer.xr.getController(i);
+ const lineGeo=new THREE.BufferGeometry().setFromPoints([
+  new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,-2)
+ ]);
+ controller.add(new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0x46e4ff})));
+ scene.add(controller);controllers.push(controller);
+ controller.addEventListener('select',()=>{
+  raycaster.setFromXRController(controller);
+  const hits=raycaster.intersectObjects(xrButtons,true);
+  if(hits.length){
+   let o=hits[0].object;
+   while(o&&!o.userData.action)o=o.parent;
+   if(o)o.userData.action();
+  }
+ });
+}
+renderer.setAnimationLoop((t,frame)=>{if(session){const xrCam=renderer.xr.getCamera();const p=new THREE.Vector3(),q=new THREE.Quaternion(),forward=new THREE.Vector3(0,0,-1);xrCam.getWorldPosition(p);xrCam.getWorldQuaternion(q);world.position.copy(p).add(forward.applyQuaternion(q).multiplyScalar(1.35));world.quaternion.copy(q);setSprite(clockLabel,new Date().toLocaleTimeString('de-DE'));
+for(const b of xrButtons)b.userData.bg.material.color.setHex(0x07314d);
+for(const c of controllers){
+ raycaster.setFromXRController(c);
+ const hits=raycaster.intersectObjects(xrButtons,true);
+ if(hits.length){
+  let o=hits[0].object;
+  while(o&&!o.userData.action)o=o.parent;
+  if(o)o.userData.bg.material.color.setHex(0x087ea4);
+ }
+}
+renderer.render(scene,camera);}});
 }
 $('ar').onclick=async()=>{
 if(!navigator.xr){log('WebXR fehlt. Nutze den Meta Quest Browser mit HTTPS.');return;}
