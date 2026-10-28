@@ -1,10 +1,10 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>J.A.R.V.I.S. MK-IX</title><style>
-:root{--c:#52e6ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#103449,#030914 75%);color:#d8f8ff;font:16px Arial,sans-serif}[hidden]{display:none!important}header{padding:20px;border-bottom:1px solid #2689aa;letter-spacing:3px;color:var(--c)}main{max-width:960px;margin:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}.panel{border:1px solid #2689aa;background:#061b2de8;border-radius:14px;padding:18px;box-shadow:0 0 20px #00bfff19}h2{font-size:15px;letter-spacing:2px;color:var(--c)}button,input,select{font:inherit;border-radius:8px;padding:12px;background:#092f46;color:white;border:1px solid #2bbddd}button{cursor:pointer}button:active{background:#15779c}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px}.full{width:100%;margin-top:8px}input{width:100%;margin:5px 0 10px}label{font-size:13px;color:#b3dbe6}output{display:block;font-size:22px;color:#8cfaff;margin:12px 0}#log{height:110px;overflow:auto;font-size:13px;white-space:pre-wrap}small{color:#9dbcca}#xrStart{background:#087a9b;font-weight:bold}#timerDisplay{font-size:35px;color:var(--c);text-align:center}footer{padding:20px;text-align:center;font-size:12px;color:#8bb5c5}</style></head><body><header>◉ J.A.R.V.I.S. <small>QUEST / MK-IX</small></header><main>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>J.A.R.V.I.S. MK-X</title><style>
+:root{--c:#52e6ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#103449,#030914 75%);color:#d8f8ff;font:16px Arial,sans-serif}[hidden]{display:none!important}header{padding:20px;border-bottom:1px solid #2689aa;letter-spacing:3px;color:var(--c)}main{max-width:960px;margin:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}.panel{border:1px solid #2689aa;background:#061b2de8;border-radius:14px;padding:18px;box-shadow:0 0 20px #00bfff19}h2{font-size:15px;letter-spacing:2px;color:var(--c)}button,input,select{font:inherit;border-radius:8px;padding:12px;background:#092f46;color:white;border:1px solid #2bbddd}button{cursor:pointer}button:active{background:#15779c}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px}.full{width:100%;margin-top:8px}input{width:100%;margin:5px 0 10px}label{font-size:13px;color:#b3dbe6}output{display:block;font-size:22px;color:#8cfaff;margin:12px 0}#log{height:110px;overflow:auto;font-size:13px;white-space:pre-wrap}small{color:#9dbcca}#xrStart{background:#087a9b;font-weight:bold}#timerDisplay{font-size:35px;color:var(--c);text-align:center}footer{padding:20px;text-align:center;font-size:12px;color:#8bb5c5}</style></head><body><header>◉ J.A.R.V.I.S. <small>QUEST / MK-X</small></header><main>
 <section class="panel"><h2>◈ MIXED REALITY</h2><p>Holografisches HUD mit Controller-Auswahl. Startabstand 65 cm.</p><button id="xrStart" class="full">MIXED REALITY STARTEN</button><button id="xrExit" class="full">XR BEENDEN</button><label>HUD-Abstand: <span id="distanceText">65</span> cm</label><input id="distance" type="range" min="45" max="160" value="65"><button id="recenter" class="full">HUD NEU AUSRICHTEN</button><small id="xrStatus">XR noch nicht gestartet</small></section>
 <section class="panel" hidden><h2>⚙ SYSTEMSTEUERUNG</h2><div class="buttons"><button id="mode">WERKSTATT AN</button><button id="system">SYSTEMCHECK</button><button id="speak">SPRACHBEFEHL</button><button id="clock">UHRZEIT</button></div><output id="modeText">STANDARDMODUS</output></section>
 <section class="panel" hidden><h2>◷ ZEITWERKZEUGE</h2><div id="timerDisplay">00:00.0</div><div class="buttons"><button id="stopStart">START / PAUSE</button><button id="stopReset">RESET</button></div><label>Countdown in Sekunden</label><input id="countSeconds" type="number" min="1" max="86400" value="60"><div class="buttons"><button id="countStart">COUNTDOWN START</button><button id="countStop">STOPP</button></div></section>
 <section class="panel" hidden><h2>⚒ WERKSTATTRECHNER</h2><label>Wert</label><input id="convValue" type="number" value="100" step="any"><label>Umrechnung</label><select id="convType" class="full"><option value="nmft">Nm → lb-ft</option><option value="ftnm">lb-ft → Nm</option><option value="kwps">kW → PS</option><option value="pskw">PS → kW</option><option value="barkpa">bar → kPa</option><option value="kpabar">kPa → bar</option><option value="mmcm">mm → cm</option></select><button id="convert" class="full">BERECHNEN</button><output id="convResult">Ergebnis bereit</output></section>
-<section class="panel" hidden><h2>▣ TASCHENRECHNER</h2><input id="calc" placeholder="z. B. (12+8)*2" inputmode="text"><button id="calculate" class="full">AUSRECHNEN</button><output id="calcResult">Bereit</output></section><section class="panel"><h2>◉ JARVIS KONSOLE</h2><div id="log"></div><small>Lokaler Sprachassistent mit vorgefertigten Antworten. Keine Verbindung zu Fahrzeugsteuergeräten oder KI-Backend.</small></section></main><footer>J.A.R.V.I.S. MK-IX · Quest Browser · Nicht während der Fahrt verwenden</footer>
+<section class="panel" hidden><h2>▣ TASCHENRECHNER</h2><input id="calc" placeholder="z. B. (12+8)*2" inputmode="text"><button id="calculate" class="full">AUSRECHNEN</button><output id="calcResult">Bereit</output></section><section class="panel"><h2>◉ JARVIS KONSOLE</h2><div id="log"></div><small>Lokaler Sprachassistent mit vorgefertigten Antworten. Keine Verbindung zu Fahrzeugsteuergeräten oder KI-Backend.</small></section></main><footer>J.A.R.V.I.S. MK-X · Quest Browser · Nicht während der Fahrt verwenden</footer>
 <script type="module">
 const $=id=>document.getElementById(id);
 const log=s=>{const e=document.createElement('div');e.textContent='> '+s;$('log').prepend(e)};
@@ -17,6 +17,22 @@ function pickVoice(){const vs=speechSynthesis.getVoices();selectedVoice=vs.find(
 if('speechSynthesis'in window){pickVoice();speechSynthesis.addEventListener?.('voiceschanged',pickVoice)}
 function speak(t,interrupt=true){log('J.A.R.V.I.S.: '+t);if(prerecorded[t]){try{if(playingClip){playingClip.pause();playingClip.currentTime=0}playingClip=new Audio('data:audio/mpeg;base64,'+prerecorded[t]);playingClip.volume=1;playingClip.play().catch(e=>log('Audio konnte nicht starten: '+e.message));return}catch(e){log('Audiofehler: '+e.message)}}if(!('speechSynthesis'in window)){log('Sprachausgabe im Browser nicht verfügbar');return}
 try{if(interrupt)speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='de-DE';u.rate=.92;u.pitch=.82;u.volume=1;if(selectedVoice)u.voice=selectedVoice;u.onerror=e=>log('Sprachausgabe: '+e.error);speechSynthesis.speak(u)}catch(e){log('Sprachausgabe nicht verfügbar: '+e.message)}}
+function testBrowserVoice(){
+ const msg='Guten Tag, Sir. Browserstimme aktiviert.';
+ log('BROWSERSTIMMEN-TEST: '+msg);
+ if(!('speechSynthesis' in window)){setLabel(entryLabel,'BROWSERSTIMME NICHT VERFUEGBAR');return}
+ try{
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(msg);
+  u.lang='de-DE';u.rate=.9;u.pitch=.85;u.volume=1;
+  if(selectedVoice)u.voice=selectedVoice;
+  u.onstart=()=>{log('Browserstimme gestartet');setLabel(entryLabel,'BROWSERSTIMME SPIELT')};
+  u.onend=()=>{log('Browserstimme beendet');setLabel(entryLabel,'BROWSERSTIMME BEENDET')};
+  u.onerror=e=>{log('Browserstimme Fehler: '+e.error);setLabel(entryLabel,'SPRACHTEST FEHLGESCHLAGEN')};
+  speechSynthesis.speak(u);
+  setTimeout(()=>{if(speechSynthesis.pending||speechSynthesis.speaking)speechSynthesis.resume()},250);
+ }catch(e){log('Browserstimme Fehler: '+e.message);setLabel(entryLabel,'SPRACHTEST FEHLGESCHLAGEN')}
+}
 function countdownVoice(n){speak('T minus '+n)}
 function jarvisReply(input){const t=input.trim().toLocaleLowerCase('de-DE');const pick=a=>a[Math.floor(Math.random()*a.length)];
 if(!t)return 'Ich habe keine Eingabe erhalten, Sir.';
@@ -84,7 +100,7 @@ async function initXR(){
  scene=new THREE.Scene();world=new THREE.Group();scene.add(world);
  modeLabel=label('STANDARD',.25);modeLabel.position.set(0,.37,0);world.add(modeLabel);
  clockLabel=label('--:--:--',.27);clockLabel.position.set(0,.315,0);world.add(clockLabel);
- const title=label('J.A.R.V.I.S. MK-IX',.44);title.position.set(0,.26,0);world.add(title);
+ const title=label('J.A.R.V.I.S. MK-X',.44);title.position.set(0,.26,0);world.add(title);
  stopLabel=label('STOPPUHR 0.0 s',.35);stopLabel.position.set(-.26,-.115,0);world.add(stopLabel);
  countStatus=label('COUNTDOWN BEREIT',.36);countStatus.position.set(0,-.28,0);world.add(countStatus);
  countLabel=label('60 s',.25);countLabel.position.set(0,-.34,0);world.add(countLabel);
@@ -100,7 +116,9 @@ async function initXR(){
  // Calculator: large, readable individual labels, narrow hitboxes to avoid overlap.
  const digits=['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'];
  digits.forEach((d,i)=>{const b=button(d,-.225+(i%4)*.15,.09-Math.floor(i/4)*.105,.126,.088,()=>{if(d==='C'){calcInput='';calcResult=''}else if(d==='=')calculate();else calcInput+=d;setLabel(entryLabel,(calcInput||'0')+' = '+(calcResult||'?'))},'key');b.panel='calc'});
- const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜẞ0123456789'.split('');letters.forEach((d,i)=>{const b=button(d,-.255+(i%7)*.085,.10-Math.floor(i/7)*.082,.079,.075,()=>{chatInput+=d;setLabel(entryLabel,chatInput.slice(-28))},'key');b.panel='chat'});
+ const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜẞ0123456789'.split('');letters.forEach((d,i)=>{const b=button(d,-.2975+(i%8)*.085,.10-Math.floor(i/8)*.082,.079,.075,()=>{chatInput+=d;setLabel(entryLabel,chatInput.slice(-28))},'key');b.panel='chat'});
+ const spaceKey=button('LEERZEICHEN',.19,-.345,.30,.064,()=>{chatInput+=' ';setLabel(entryLabel,chatInput.slice(-28)||' ')},'special');spaceKey.panel='chat';
+ const voiceTestKey=button('STIMMENTEST',-.205,-.345,.23,.064,testBrowserVoice,'special');voiceTestKey.panel='chat';
  for(const [txt,x,fn] of [['ZURUECK',-.19,()=>showPanel(null)],['SENDEN',.19,()=>{sendChat()}],['LOESCHEN',0,()=>{chatInput=chatInput.slice(0,-1);setLabel(entryLabel,chatInput)}]]){const b=button(txt,x,-.43,txt==='LOESCHEN'?.17:.18,.068,fn,'special');b.panel='chat'}
  const back=button('SCHLIESSEN',0,-.44,.20,.075,()=>showPanel(null),'special');back.panel='calc';
  powerButton=circleButton(.36,-.45,async()=>{if(session)await session.end()});
@@ -121,5 +139,5 @@ async function initXR(){
 function positionHUD(){if(!session)return;const cam=renderer.xr.getCamera(),p=new THREE.Vector3(),q=new THREE.Quaternion();cam.getWorldPosition(p);cam.getWorldQuaternion(q);world.position.copy(p).add(new THREE.Vector3(0,0,-distance).applyQuaternion(q));world.quaternion.copy(q)}
 $('xrStart').onclick=async()=>{try{if(session)return;if(!navigator.xr||!await navigator.xr.isSessionSupported('immersive-ar'))throw Error('Mixed Reality nicht verfügbar');if(!renderer)await initXR();session=await navigator.xr.requestSession('immersive-ar',{requiredFeatures:[],optionalFeatures:['local','dom-overlay'],domOverlay:{root:document.body}});session.addEventListener('end',()=>{session=null;$('xrStatus').textContent='XR beendet'});await renderer.xr.setSession(session);positionHUD();$('xrStatus').textContent='MIXED REALITY AKTIV'}catch(e){log('XR-Start fehlgeschlagen: '+e.message);$('xrStatus').textContent='XR FEHLER'}};
 $('xrExit').onclick=async()=>{if(session)await session.end()};
-log('J.A.R.V.I.S. MK-IX bereit. Texteingaben in Mixed Reality werden vorgelesen.');
+log('J.A.R.V.I.S. MK-X bereit. Texteingaben in Mixed Reality werden vorgelesen.');
 </script></body></html>
